@@ -1,32 +1,35 @@
 import { Button } from "@material-ui/core";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router"
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import Star from '../../img/star.png'
 import './Question.css'
 
 const Question = ({
-  currQues, 
-  setCurrQues, 
+  currQues,
+  setCurrQues,
+  star,
   questions, 
   options, 
-  correct, 
-  score, 
-  setScore, 
-  setQuestions}) => {
-  
-  const [selected, setSelected] = useState()
+  total,
+  correct,
+  setScore,
+  score,
+  setQuestions
+  }) => {
+
   const [error, setError ] = useState(false)
+	const [selected, setSelected] = useState()
 
   const navigate = useNavigate()
-
-
+  
   const handleClick = (i) => {
     setSelected(i)
-    if(i === correct) {
-      setScore(score + 1)
-    } 
-    setError(false)
-  }
+      if(i === correct) {
+        setScore(score + 1)
+      } 
+      setError(false)
+    }
 
   const handleSelect = (i) => {
     if (selected === i && selected === correct) return "select";
@@ -49,20 +52,30 @@ const Question = ({
       setError("Please select an option first")
     }
   }
+
   return (
-    <div>
-      <h2>Question {currQues + 1}</h2>
+    <div className='question'>
+      <div className='question__block'>
+        <div className='question__count'>{currQues + 1}/{total} </div>
+        <span className='question__text' dangerouslySetInnerHTML={{__html: questions[currQues].question}} />
+        <div className='question__star'>
+            {
+              star.map(i => {
+                return <img className='star' key={i} src={Star} alt='score'/>
+              })
+            } 
+        </div>
+      </div>
 
-      <div className='single__option'>
-        <span dangerouslySetInnerHTML={{__html: questions[currQues].question}} />
+      <div className='question__answer'>
 
-        <div className='options'>
+        <div className='answer__options'>
           {error && <ErrorMessage>{error}</ErrorMessage>}
           {
             options.map(i => {
               return (
                 <button
-                className={`single__option ${selected && handleSelect(i)}`}
+                  className={`option ${selected && handleSelect(i)}`}
                   key={i}
                   onClick={() => handleClick(i)}
                   disabled={selected}>
@@ -74,22 +87,22 @@ const Question = ({
         </div>
         <div className='controls'>
           <Button
+            className='btn'
             variant='contained'
             color='secondary'
             size='large'
-            style={{width: 185}}
             href='/'
             onClick={() => handleQuit()}>
             Quit
           </Button>
           <Button
+            className='btn'
             variant='contained'
             color='primary'
             size='large'
-            style={{width: 185}}
             onClick={() => handleNext()}
             >
-            {currQues > 20 ? 'Submit' : 'Next Question'}
+              Next Question
           </Button>
         </div>
       </div>

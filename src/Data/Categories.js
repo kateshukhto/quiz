@@ -1,8 +1,15 @@
+import axios from 'axios';
+
+const fetchingQuiz = async (category, difficulty) => {
+  const result = await axios.get(
+    `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`
+  )
+  
+  return await result.data.results
+}
+
 const Categories = [
-  {
-    category: "General Knowledge",
-    value: 9,
-  },
+  {category: "General Knowledge", value: 9},
   { category: "Books", value: 10 },
   { category: "Films", value: 11 },
   { category: "Music", value: 12 },
@@ -28,4 +35,4 @@ const Categories = [
   { category: "Cartoon and Animations", value: 32 },
 ];
 
-export default Categories;
+export {Categories, fetchingQuiz} ;

@@ -1,19 +1,18 @@
+import { useState } from 'react';
 import ImageQuiz from './quiz.svg';
 import './Home.css'
 import { Button, MenuItem, TextField } from '@material-ui/core';
-import Categories from '../../../Data/Categories';
+import { Categories } from '../../../Data/Categories';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import { useState } from 'react';
 
-const Home = ({name, setName, getQuestions}) => {
+const Home = ({getQuestions}) => {
   const [category, setCategory] = useState('')
   const [difficulty, setDifficulty] = useState('')
   const [error, setError] = useState(false)
 
   const handleSubmit = () => {
-    if(!name || !difficulty || !category){
+    if(!difficulty || !category){
       setError(true)
-      return
     } else {
       setError(false)
       getQuestions(category, difficulty)
@@ -21,26 +20,19 @@ const Home = ({name, setName, getQuestions}) => {
   }
 
   return (
-    <div className='content'>
-      <img className='banner' src={ImageQuiz} alt='Quiz banner'/>
-      
-      <div className='setting'>
+    <div className='home__container'>
+      <img className='home__banner' src={ImageQuiz} alt='Quiz banner'/>  
+      <div className='home__setting'>
         <h3 className='home__title'>Quiz Setting</h3>
         <div className='setting__select'>
           {error && <ErrorMessage>Please Fill all the feilds</ErrorMessage>}
-        <TextField
-          style={{marginBottom: 20}}
-          label='Enter your name'
-          variant='outlined'
-          onChange={(e) => setName(e.target.value)}
-          />
           <TextField
-          select
-          style={{marginBottom: 20}}
-          label='Select category'
-          variant='outlined'
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+            select
+            style={{marginBottom: 20}}
+            label='Select category'
+            variant='outlined'
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           >
             {Categories.map((category) => (
                 <MenuItem key={category.category} value={category.value}>

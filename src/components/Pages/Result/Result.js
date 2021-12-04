@@ -1,20 +1,22 @@
 import { Button } from "@material-ui/core";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import Star from '../../../img/star.png'
 import './Result.css'
 
-const Result = ({name, score}) => {
+const Result = ({total, score}) => {
   const navigator = useNavigate()
 
   useEffect(() => {
-    if(!name) {
+    if(!total) {
       navigator('/')
     }
-  }, [name, navigator])
+  }, [total, navigator])
 
   return (
     <div className='result'>
-      <span className='title'>Final Score : {score}</span>
+      <img className='result__img' src={Star} alt='final score'/>
+      <span className='result__title'>Final Score : {score}</span>
       <Button
           variant="contained"
           color="secondary"

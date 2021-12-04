@@ -1,48 +1,43 @@
-import { useEffect, useState } from "react";
-import './Quiz.css'
-import Question from "../../Question/Question";
+import { useEffect, useState } from 'react'
+import Question from '../../Question/Question'
 
-const Quiz = ({name, questions, score, setQuestions, setScore}) => {
-  const [options, setOptions] = useState([])
+const Quiz = ({questions, score, setQuestions, setScore, total}) => {
+	const [options, setOptions] = useState([])
   const [currQues, setCurrQues] = useState(0)
 
-    useEffect(() => {
-      setOptions(
-        questions &&
+	useEffect(() => {
+		setOptions(
+			questions &&
           handleShuffle([
-            questions[currQues]?.correct_answer,
-            ...questions[currQues]?.incorrect_answers,
+          	questions[currQues]?.correct_answer,
+          	...questions[currQues]?.incorrect_answers,
           ])
-      );
-    }, [currQues, questions]);
+		)
+	}, [currQues, questions])
+
+  const star = []
+
+  for(let i = 1; i <= score; i++ ) {
+    star.push(i)
+  }
   
-    const handleShuffle = (options) => {
-      return options.sort(() => Math.random() - 0.5);
-    };
+	const handleShuffle = (options) => {
+		return options.sort(() => Math.random() - 0.5)
+	}
 
-  return (
-    <div className='quiz'>
-      <span className='subtitle'>Welcome, {name}</span>
-
-      {
-        <div className='quizInfo'>
-          <span>{questions[currQues].category}</span>
-          <span>Score: {score}</span>
-        </div>
-      }
-
-      <Question
-        currQues={currQues}
-        setCurrQues={setCurrQues}
-        questions={questions}
-        options={options}
-        correct={questions[currQues]?.correct_answer}
-        score={score}
-        setScore={setScore}
-        setQuestions={setQuestions}/>
-
-    </div>
-  )
+	return (
+			<Question
+				currQues={currQues}
+				setCurrQues={setCurrQues}
+				score={score}
+				star={star}
+				total={total}
+				questions={questions}
+				options={options}
+				correct={questions[currQues]?.correct_answer}
+				setScore={setScore}
+				setQuestions={setQuestions}/>
+	)
 }
 
-export default Quiz;
+export default Quiz
