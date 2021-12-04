@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ImageQuiz from './quiz.svg';
+import ImageQuiz from '../../../img/quiz.svg';
 import './Home.css'
 import { Button, MenuItem, TextField } from '@material-ui/core';
 import { Categories } from '../../../Data/Categories';
